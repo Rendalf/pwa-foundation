@@ -1,4 +1,4 @@
-import './style.css'
+import './styles.css'
 import printMe from './print'
 
 function component () {
@@ -7,7 +7,7 @@ function component () {
   element.classList.add('hello')
 
   const button = document.createElement('button')
-  button.innerHTML = 'Click me and check the console'
+  button.innerHTML = 'Click me and check the console! Please'
   button.onclick = printMe
 
   element.appendChild(button)
@@ -15,4 +15,15 @@ function component () {
   return element
 }
 
-document.body.appendChild(component())
+let element = component()
+document.body.appendChild(element)
+
+if (module.hot) {
+  module.hot.accept('./print.js', () => {
+    console.log('Accepting the updating printMe module')
+
+    document.body.removeChild(element)
+    element = component()
+    document.body.appendChild(element)
+  })
+}
