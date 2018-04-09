@@ -1,16 +1,20 @@
 import './styles.css'
 import printMe from './print'
+import { cube } from './math'
 
 function component () {
-  const element = document.createElement('div')
-  element.innerHTML = `Hello, webpack!`
+  const element = document.createElement('pre')
+  element.innerHTML = [
+    `Hello, webpack!`,
+    `5 cubed is equal to ${ cube(5) }`,
+  ].join('\n\n')
   element.classList.add('hello')
 
-  const button = document.createElement('button')
-  button.innerHTML = 'Click me and check the console! Please'
-  button.onclick = printMe
+  const printButton = document.createElement('button')
+  printButton.innerHTML = 'Print'
+  printButton.onclick = printMe
 
-  element.appendChild(button)
+  element.appendChild(printButton)
 
   return element
 }
