@@ -15,8 +15,7 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "lib": [
-      "es2015", "dom"
+      "es2015", "dom",
     ],
   },
-
 }

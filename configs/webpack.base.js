@@ -23,6 +23,7 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
       maxInitialRequests: 4,
+      minSize: 1,
       automaticNameDelimiter: '-',
       name: true,
     },
