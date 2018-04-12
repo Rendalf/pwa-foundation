@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './styles.css'
+import './styles.1.css'
 import { cube } from './math'
 import printMe from './print'
 
