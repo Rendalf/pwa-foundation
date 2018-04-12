@@ -52,7 +52,7 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin('dist', {}),
     new HtmlWebpackPlugin({
       title: 'Some Day it will become a PWA',
     }),

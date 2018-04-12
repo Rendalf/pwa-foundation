@@ -6,7 +6,7 @@ import { cube } from './math'
 import printMe from './print'
 
 console.log(React, ReactDOM)
-console.log('Index.ts')
+console.log('Hello World!')
 
 function component () {
   const element = document.createElement('pre')

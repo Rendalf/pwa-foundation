@@ -1,7 +1,6 @@
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
-// TODO @rendalf try out mini-css-extract-plugin when it gets ready
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = merge(baseConfig, {
   mode: 'production',
@@ -12,20 +11,17 @@ module.exports = merge(baseConfig, {
     rules: [
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-          ],
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
       },
     ],
   },
 
   plugins: [
-    new ExtractTextPlugin({
-      filename: 'styles.[chunkhash].css',
-      allChunks: true,
+    new MiniCssExtractPlugin({
+      filename: 'style.[contenthash].css',
     }),
   ],
 })
