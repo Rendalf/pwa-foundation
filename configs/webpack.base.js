@@ -17,13 +17,10 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
 
-  // TODO @rendalf check default cacheGroup from here:
-  // https://webpack.js.org/plugins/split-chunks-plugin/#optimization-splitchunks
   optimization: {
     splitChunks: {
       chunks: 'all',
       maxInitialRequests: 4,
-      minSize: 1,
       automaticNameDelimiter: '-',
       name: true,
     },
