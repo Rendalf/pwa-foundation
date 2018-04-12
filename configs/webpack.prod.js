@@ -7,6 +7,19 @@ module.exports = merge(baseConfig, {
 
   devtool: 'source-map',
 
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       styles: {
+  //         name: 'styles',
+  //         test: /\.css$/,
+  //         chunks: 'all',
+  //         enforce: true,
+  //       },
+  //     },
+  //   },
+  // },
+
   module: {
     rules: [
       {

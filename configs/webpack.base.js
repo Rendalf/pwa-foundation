@@ -1,5 +1,9 @@
+const path = require('path')
+
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+
+const ROOT_PATH = path.join(__dirname, '..')
 
 module.exports = {
   entry: {
@@ -50,7 +54,9 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin('dist', {}),
+    new CleanWebpackPlugin(['dist'], {
+      root: ROOT_PATH,
+    }),
     new HtmlWebpackPlugin({
       title: 'Some Day it will become a PWA',
     }),
