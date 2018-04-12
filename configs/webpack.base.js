@@ -3,12 +3,29 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    app: './src/index.ts',
+    helper: './src/helper.ts',
   },
 
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].js',
     publicPath: '/',
+  },
+
+  resolve: {
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
+  },
+
+  // TODO @rendalf check default cacheGroup from here:
+  // https://webpack.js.org/plugins/split-chunks-plugin/#optimization-splitchunks
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: 4,
+      automaticNameDelimiter: '-',
+      name: true,
+    },
   },
 
   module: {

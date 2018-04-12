@@ -1,17 +1,21 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "outDir": "../public/js",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "moduleResolution": "node",
     "strict": true,
-    "module": "es6",
+    "module": "esnext",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "target": "es5",
     "jsx": "react",
     "sourceMap": true,
     "skipLibCheck": true,
+    "lib": [
+      "es2015", "dom"
+    ],
   },
 }

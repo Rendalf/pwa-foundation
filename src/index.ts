@@ -1,13 +1,19 @@
+import _ from 'lodash'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import './styles.css'
-import printMe from './print'
 import { cube } from './math'
+import printMe from './print'
+
+console.log(React, ReactDOM)
+console.log('Index.ts')
 
 function component () {
   const element = document.createElement('pre')
-  element.innerHTML = [
+  element.innerHTML = _.join([
     `Hello, webpack!`,
     `5 cubed is equal to ${ cube(5) }`,
-  ].join('\n\n')
+  ], '\n\n')
   element.classList.add('hello')
 
   const printButton = document.createElement('button')
@@ -22,8 +28,10 @@ function component () {
 let element = component()
 document.body.appendChild(element)
 
+// TODO @rendalf remove that any
+declare var module: any
 if (module.hot) {
-  module.hot.accept('./print.js', () => {
+  module.hot.accept('./print', () => {
     console.log('Accepting the updating printMe module')
 
     document.body.removeChild(element)
