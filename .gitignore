@@ -2,3 +2,4 @@
 /yarn-error.log
 /dist
 .DS_STORE
+**/*.css.d.ts

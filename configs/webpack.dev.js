@@ -39,7 +39,13 @@ module.exports = merge(baseConfig, {
         include: SOURCE_PATH,
         use: [
           'style-loader',
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[folder]_[local]-[hash:base64:5]',
+            },
+          },
         ],
       },
     ],
