@@ -7,7 +7,13 @@ const webpack = require('webpack')
 module.exports = merge(baseConfig, {
   mode: 'development',
 
-  devtool: 'inline-source-map',
+  devtool: 'eval-source-map',
+
+  output: {
+    filename: '[name].js',
+    chunkFilename: '[name].js',
+    publicPath: '/',
+  },
 
   devServer: {
     contentBase: path.join(__dirname, 'dist'),

@@ -1,14 +1,17 @@
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
-// if you need concat css files from all entries, you need:
-// 1) use cacheGroup styles, but you will have styles.js file;
-// 2) use extract-text-webpack-plugin, but you'll change hash of css file very compilation.
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = merge(baseConfig, {
   mode: 'production',
 
   devtool: 'source-map',
+
+  output: {
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].js',
+    publicPath: '/',
+  },
 
   // optimization: {
   //   splitChunks: {
@@ -39,6 +42,9 @@ module.exports = merge(baseConfig, {
   },
 
   plugins: [
+    // if you need concat css files from all entries, you need:
+    // 1) use cacheGroup styles, but you will have styles.js file;
+    // 2) use extract-text-webpack-plugin, but you'll change hash of css file very compilation.
     new MiniCssExtractPlugin({
       filename: 'style.[contenthash].css',
     }),

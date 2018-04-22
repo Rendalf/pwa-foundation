@@ -4,21 +4,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const ROOT_PATH = path.join(__dirname, '..')
+const SOURCE_PATH = path.join(ROOT_PATH, 'src')
 
 module.exports = {
   entry: {
     app: './src/index.ts',
-    helper: './src/helper.ts',
-  },
-
-  output: {
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].js',
-    publicPath: '/',
   },
 
   resolve: {
-    extensions: ['.tsx', '.ts', '.jsx', '.js'],
+    extensions: ['.tsx', '.ts', '.js'],
+    symlinks: false,
   },
 
   optimization: {
@@ -27,25 +22,33 @@ module.exports = {
       maxInitialRequests: 4,
       automaticNameDelimiter: '-',
       name: true,
+      cacheGroups: {
+        vendors: {
+          name: 'vendor',
+        },
+      },
     },
   },
 
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
+        include: SOURCE_PATH,
         use: [
           'ts-loader',
         ],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
+        include: SOURCE_PATH,
         use: [
           'file-loader',
         ],
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
+        include: SOURCE_PATH,
         use: [
           'file-loader',
         ],
@@ -58,7 +61,7 @@ module.exports = {
       root: ROOT_PATH,
     }),
     new HtmlWebpackPlugin({
-      title: 'Some Day it will become a PWA',
+      template: path.resolve(SOURCE_PATH, 'templates', 'index.html'),
     }),
   ],
 }
