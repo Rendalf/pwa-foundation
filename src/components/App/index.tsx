@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader'
-import About from '../About'
+import About from 'components/About'
 
 const AppComponent: React.StatelessComponent = () => {
   return (

@@ -36,6 +36,7 @@ module.exports = merge(baseConfig, {
       },
       {
         test: /\.css$/,
+        include: SOURCE_PATH,
         use: [
           'style-loader',
           'css-loader',

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import App from './components/App'
+import App from 'components/App'
 
 const MAIN_APP_NODE_ID = 'main-app'
 
@@ -12,7 +12,7 @@ export default function launchMainApp () {
   }
 
   render(
-    (<App />),
+    <App />,
     appNode,
   )
 }

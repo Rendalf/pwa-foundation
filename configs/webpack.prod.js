@@ -1,6 +1,11 @@
+const path = require('path')
+
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
+const ROOT_PATH = path.join(__dirname, '..')
+const SOURCE_PATH = path.join(ROOT_PATH, 'src')
 
 module.exports = merge(baseConfig, {
   mode: 'production',
@@ -40,6 +45,7 @@ module.exports = merge(baseConfig, {
       },
       {
         test: /\.css$/,
+        include: SOURCE_PATH,
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',

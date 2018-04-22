@@ -1,3 +1,3 @@
-import launchMainApp from './main'
+import launchMainApp from 'main'
 
 launchMainApp()
