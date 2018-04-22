@@ -12,9 +12,11 @@
     "jsx": "react",
     "sourceMap": true,
     "skipLibCheck": true,
-    "jsxFactory": "React.createElement",
     "lib": [
       "es2015", "dom",
     ],
   },
+  "includes": [
+    "./node_modules/@types/webpack-env/index.d.ts"
+  ],
 }

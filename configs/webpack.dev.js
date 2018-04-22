@@ -4,6 +4,9 @@ const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
 const webpack = require('webpack')
 
+const ROOT_PATH = path.join(__dirname, '..')
+const SOURCE_PATH = path.join(ROOT_PATH, 'src')
+
 module.exports = merge(baseConfig, {
   mode: 'development',
 
@@ -23,6 +26,14 @@ module.exports = merge(baseConfig, {
 
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        include: SOURCE_PATH,
+        use: [
+          'ts-loader',
+          'babel-loader',
+        ],
+      },
       {
         test: /\.css$/,
         use: [

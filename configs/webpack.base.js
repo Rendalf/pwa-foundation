@@ -33,13 +33,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        include: SOURCE_PATH,
-        use: [
-          'ts-loader',
-        ],
-      },
-      {
         test: /\.(png|svg|jpg|gif)$/,
         include: SOURCE_PATH,
         use: [

@@ -32,6 +32,13 @@ module.exports = merge(baseConfig, {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        include: SOURCE_PATH,
+        use: [
+          'ts-loader',
+        ],
+      },
+      {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
