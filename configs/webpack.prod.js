@@ -49,6 +49,14 @@ module.exports = merge(baseConfig, {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              config: {
+                path: path.resolve(__dirname, 'postcss.config.js'),
+              },
+            },
+          },
         ],
       },
     ],
