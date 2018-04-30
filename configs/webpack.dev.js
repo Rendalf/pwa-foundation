@@ -13,8 +13,8 @@ module.exports = merge(baseConfig, {
   devtool: 'eval-source-map',
 
   output: {
-    filename: '[name].js',
-    chunkFilename: '[name].js',
+    filename: 'js/[name].js',
+    chunkFilename: 'js/[name].js',
     publicPath: '/',
   },
 

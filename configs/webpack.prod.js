@@ -13,8 +13,8 @@ module.exports = merge(baseConfig, {
   devtool: 'source-map',
 
   output: {
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].js',
+    filename: 'js/[name].[chunkhash].js',
+    chunkFilename: 'js/[name].[chunkhash].js',
     publicPath: '/',
   },
 
@@ -67,7 +67,7 @@ module.exports = merge(baseConfig, {
     // 1) use cacheGroup styles, but you will have styles.js file;
     // 2) use extract-text-webpack-plugin, but you'll change hash of css file very compilation.
     new MiniCssExtractPlugin({
-      filename: 'style.[contenthash].css',
+      filename: 'css/style.[contenthash].css',
     }),
   ],
 })
