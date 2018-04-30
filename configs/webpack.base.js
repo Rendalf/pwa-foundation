@@ -8,7 +8,7 @@ const SOURCE_PATH = path.join(ROOT_PATH, 'src')
 
 module.exports = {
   entry: {
-    app: './src/index.ts',
+    app: path.resolve(SOURCE_PATH, 'index.ts'),
   },
 
   resolve: {

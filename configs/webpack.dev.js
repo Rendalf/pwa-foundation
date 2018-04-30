@@ -44,6 +44,15 @@ module.exports = merge(baseConfig, {
             options: {
               modules: true,
               localIdentName: '[folder]_[local]-[hash:base64:5]',
+              importLoaders: 1,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              config: {
+                path: path.resolve(__dirname, 'postcss.config.js'),
+              },
             },
           },
         ],

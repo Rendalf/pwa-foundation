@@ -1,5 +1,9 @@
+:root {
+  --about-font-size: 14px;
+}
+
 .About {
   font-family: sans-serif;
-  font-size: 14px;
+  font-size: var(--about-font-size);
   color: #444;
 }
