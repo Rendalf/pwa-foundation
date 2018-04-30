@@ -8,6 +8,7 @@
   "scripts": {
     "start": "webpack-dev-server --config ./configs/webpack.dev.js",
     "build": "webpack --config ./configs/webpack.prod.js",
+    "server": "node ./server/app.js",
     "tcm": "tcm src",
     "tcmw": "tcm src --watch",
     "tcmc": "find src -name \"*.css.d.ts\" -type f -delete",
@@ -45,6 +46,7 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
+    "express": "^4.16.3",
     "lodash": "^4.17.5",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",

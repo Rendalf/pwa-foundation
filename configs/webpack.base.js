@@ -25,10 +25,17 @@ module.exports = {
       chunks: 'all',
       maxInitialRequests: 4,
       automaticNameDelimiter: '-',
-      name: true,
       cacheGroups: {
         vendors: {
           name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+        },
+        default: {
+          name: 'common',
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
         },
       },
     },
