@@ -2,9 +2,11 @@ const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ServiceWorkerPlugin = require('serviceworker-webpack-plugin')
 
 const ROOT_PATH = path.join(__dirname, '..')
 const SOURCE_PATH = path.join(ROOT_PATH, 'src')
+const SERVICE_WORKER_PATH = path.join(SOURCE_PATH, 'sw.ts')
 
 module.exports = {
   entry: {
@@ -66,6 +68,10 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(SOURCE_PATH, 'templates', 'index.html'),
+      excludeChunks: ['sw'],
+    }),
+    new ServiceWorkerPlugin({
+      entry: SERVICE_WORKER_PATH,
     }),
   ],
 }

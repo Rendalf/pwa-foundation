@@ -15,10 +15,13 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "lib": [
-      "es2015", "dom",
+      "es2015",
+      "dom",
+      "webworker"
     ],
   },
   "includes": [
-    "./node_modules/@types/webpack-env/index.d.ts"
+    "./node_modules/@types/webpack-env/index.d.ts",
+    "./custom_typings/serviceworker-webpack-plugin.d.ts"
   ],
 }
