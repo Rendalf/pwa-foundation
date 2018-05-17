@@ -1,8 +1,12 @@
 const path = require('path')
 
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ServiceWorkerPlugin = require('serviceworker-webpack-plugin')
+const PACKAGE_INFO = require('../package.json')
+
+const APP_VERSION = PACKAGE_INFO.version
 
 const ROOT_PATH = path.join(__dirname, '..')
 const SOURCE_PATH = path.join(ROOT_PATH, 'src')
@@ -81,6 +85,9 @@ module.exports = {
     }),
     new ServiceWorkerPlugin({
       entry: SERVICE_WORKER_PATH,
+    }),
+    new webpack.DefinePlugin({
+      'process.env.APP_VERSION': JSON.stringify(APP_VERSION),
     }),
   ],
 }
