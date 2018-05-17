@@ -61,6 +61,13 @@ module.exports = {
           'app-manifest-loader',
         ],
       },
+      {
+        test: /\.html$/,
+        include: SOURCE_PATH,
+        use: [
+          'html-loader',
+        ],
+      },
     ],
   },
 

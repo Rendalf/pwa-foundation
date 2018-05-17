@@ -1,4 +1,3 @@
-import 'manifest.json'
 import { cacheFirstStrategy } from 'service-worker/strategies'
 
 const SW: ServiceWorkerGlobalScope = self as any
