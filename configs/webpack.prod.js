@@ -59,6 +59,19 @@ module.exports = merge(baseConfig, {
           },
         ],
       },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        include: SOURCE_PATH,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[hash:base64:7].[ext]',
+              outputPath: 'images',
+            },
+          },
+        ],
+      },
     ],
   },
 

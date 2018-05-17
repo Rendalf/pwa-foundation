@@ -13,6 +13,8 @@ module.exports = {
     app: path.resolve(SOURCE_PATH, 'index.ts'),
   },
 
+  context: SOURCE_PATH,
+
   resolve: {
     modules: [
       SOURCE_PATH,
@@ -46,19 +48,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        type: 'javascript/auto',
+        test: path.resolve(SOURCE_PATH, 'manifest.json'),
         include: SOURCE_PATH,
         use: [
-          'file-loader',
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+          'app-manifest-loader',
         ],
       },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        include: SOURCE_PATH,
-        use: [
-          'file-loader',
-        ],
-      }
     ],
   },
 

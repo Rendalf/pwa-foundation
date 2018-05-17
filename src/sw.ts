@@ -1,3 +1,4 @@
+import 'manifest.json'
 import { cacheFirstStrategy } from 'service-worker/strategies'
 
 const SW: ServiceWorkerGlobalScope = self as any
@@ -10,17 +11,15 @@ const CACHED_PAGES_PATHNAMES = [
   '/',
 ]
 
-const CACHED_PAGES_URLS_SET = new Set(
-  CACHED_PAGES_PATHNAMES.map((pathname) =>
-    SW.registration.scope.concat(pathname.slice(1))
-  )
-)
+const HMR_FILE_REGEXP = /\.hot-update\.js(on)?$/
 
 const CACHED_RESOURCES = serviceWorkerOption.assets
   // filter out dev-server runtime things
-  .filter((asset) => !/\.hot-update\.js(on)?$/.test(asset))
+  .filter((asset) => !HMR_FILE_REGEXP.test(asset))
   .filter((asset) => !/\.html$/.test(asset))
   .concat(...CACHED_PAGES_PATHNAMES)
+
+const CACHED_RESOURCES_SET = new Set(CACHED_RESOURCES)
 
 // TODO dynamic cache name per releases
 const CACHE_NAME = 'my_pwa_0.0.1'
@@ -58,16 +57,12 @@ SW.addEventListener('activate', (event) => {
 
 // TODO add another extensions: fonts, images
 function isRequestForCacheFirstStatic (request: Request): boolean {
-  if (CACHED_PAGES_URLS_SET.has(request.url)) {
-    return true
-  }
-
-  // ignore hot updates
-  if (/\.hot-update\.js$/.test(request.url)) {
+  if (!request.url.startsWith(SW.registration.scope)) {
     return false
   }
 
-  return /\.(css|js)$/.test(request.url)
+  const requestPathname = request.url.slice(SW.registration.scope.length - 1)
+  return CACHED_RESOURCES_SET.has(requestPathname)
 }
 
 SW.addEventListener('fetch', (event) => {
