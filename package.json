@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --config ./configs/webpack.dev.js",
+    "dev-server": "nodemon --watch ./server --watch ./configs ./server/app.js --port=3002",
     "build": "webpack --config ./configs/webpack.prod.js",
     "server": "node ./server/app.js",
     "tcm": "tcm src",
@@ -34,6 +35,7 @@
     "html-loader": "^1.0.0-alpha.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.0",
+    "nodemon": "^1.17.5",
     "postcss": "^6.0.22",
     "postcss-cssnext": "^3.1.0",
     "postcss-loader": "^2.1.4",
@@ -49,13 +51,16 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "lodash": "^4.17.5",
+    "minimist": "^1.2.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "redux": "^3.7.2",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "web-push": "^3.3.1"
   }
 }

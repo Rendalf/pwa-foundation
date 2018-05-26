@@ -1,4 +1,5 @@
 import { cacheFirstStrategy } from 'service-worker/strategies'
+import { isClientFocused } from 'service-worker/helpers'
 
 const SW: ServiceWorkerGlobalScope = self as any
 
@@ -72,4 +73,121 @@ SW.addEventListener('fetch', (event) => {
     )
     return
   }
+})
+
+
+function showNewMessageNotification (pushMessage: any): Promise<void> {
+  const { tag, data } = pushMessage
+  const { userName, userMessage, messageCount } = data
+
+  return SW.registration.getNotifications()
+    .then((notifications) => notifications.find((item) =>
+      item.data && item.data.userName === userName
+    ))
+    .then((foundNotification) => {
+      if (foundNotification) {
+        const nextMessageCount = foundNotification.data.messageCount + messageCount
+
+        return SW.registration.showNotification(`New messages from ${ userName }`, {
+          body: `You have ${ nextMessageCount } new messages from ${ userName }`,
+          tag,
+          data: {
+            userName,
+            messageCount: nextMessageCount,
+          },
+          renotify: typeof tag === 'string',
+          requireInteraction: true,
+        } as NotificationOptions)
+      }
+
+      return SW.registration.showNotification(`New message from ${ userName }`, {
+        body: `"${ userMessage }"`,
+        tag,
+        data: {
+          userName,
+          messageCount,
+        },
+        renotify: typeof tag === 'string',
+        requireInteraction: true,
+      } as NotificationOptions)
+    })
+}
+
+function fetchAndShowNotification (messageId: number) {
+  return fetch(`/api/v1/push/message/${ messageId }`)
+    .then((response) => response.json())
+    .then((responseBody) => showNewMessageNotification(responseBody.data))
+    // .then((responseBody) => {
+    //   const { title, body, icon, tag, data } = responseBody.data
+
+    //   const actions = [
+    //     {
+    //       action: 'dismiss',
+    //       title: 'Dismiss',
+    //     },
+    //     {
+    //       action: 'learn-more',
+    //       title: 'Learn More',
+    //     },
+    //   ]
+
+    //   const options: NotificationOptions = {
+    //     body,
+    //     icon,
+    //     tag,
+    //     data,
+    //   }
+
+    //   return SW.registration.showNotification(title, {
+    //     ...options,
+    //     actions,
+    //     renotify: typeof tag === 'string',
+    //     requireInteraction: typeof tag === 'string',
+    //   } as NotificationOptions)
+    // })
+}
+
+SW.addEventListener('push', (event) => {
+  const showMessagePromise = isClientFocused()
+    .then((focused) => {
+      if (focused) {
+        return
+      }
+
+      const messageId = event.data ? Number(event.data.text()) : undefined
+      if (typeof messageId !== 'number') {
+        throw new Error(`Couldn't get message ID from push event`)
+      }
+
+      return fetchAndShowNotification(messageId)
+    })
+
+  event.waitUntil(showMessagePromise)
+})
+
+
+function focusOrOpenUrl (pathname: string) {
+  const urlToOpen = new URL(pathname, SW.location.origin).href
+
+  return SW.clients.matchAll({
+    type: 'window',
+    includeUncontrolled: true,
+  })
+  .then((windowClients) => {
+    const matchedWindow = windowClients.find((item) => item.url === urlToOpen)
+
+    return matchedWindow && (matchedWindow as any).focus
+      ? (matchedWindow as any).focus()
+      : SW.clients.openWindow(urlToOpen)
+  })
+}
+
+SW.addEventListener('notificationclick', (event) => {
+  const clickedNotification = event.notification
+  clickedNotification.close()
+
+  const promiseChain = Promise.resolve()
+    .then(() => focusOrOpenUrl('/'))
+
+  event.waitUntil(promiseChain)
 })

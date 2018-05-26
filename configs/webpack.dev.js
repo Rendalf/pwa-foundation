@@ -22,6 +22,11 @@ module.exports = merge(baseConfig, {
     contentBase: path.join(__dirname, 'dist'),
     port: 3000,
     hotOnly: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3002',
+      },
+    },
   },
 
   module: {
