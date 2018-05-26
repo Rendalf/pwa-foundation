@@ -105,6 +105,25 @@ module.exports = function pushApp (router) {
    })
   })
 
+  router.put('/unsubscribe', validateSubscribeRequest, (req, res) => {
+    const removedSubscription = SUBSCRIPTIONS.find((item) =>
+      item.endpoint === req.body.endpoint
+    )
+
+    if (!removedSubscription) {
+      res.status(404).send({
+        error: `Not found`,
+      })
+      return
+    }
+
+    SUBSCRIPTIONS = SUBSCRIPTIONS.filter((item) => item !== removedSubscription)
+
+    res.status(200).send({
+      data: { success: true },
+    })
+  })
+
   router.get('/message/:id', (req, res) => {
     const messageId = Number(req.params.id)
     const message = getPushMessage(messageId)

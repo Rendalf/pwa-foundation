@@ -84,7 +84,7 @@ class PushRegistrator extends React.Component<PushRegistratorProps, PushRegistra
     })
   }
 
-  private handleEnableClick = () => {
+  private handleSubscribeClick = () => {
     this.askPushPermission().then((permission) => {
       if (permission !== 'granted') {
         return
@@ -100,17 +100,51 @@ class PushRegistrator extends React.Component<PushRegistratorProps, PushRegistra
     })
   }
 
+  private handleUnsubscribeClick = () => {
+    const { subscription } = this.state
+    if (!subscription) {
+      console.warn(`Cannot unsubscribe when has no subscription`)
+      return
+    }
+
+    subscription.unsubscribe()
+      .then(() => fetch(`/api/v1/push/unsubscribe`, {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(subscription),
+      }))
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Bad status code from server')
+        }
+
+        return response.json()
+      })
+      .then((responseBody) => {
+        if (responseBody.data && responseBody.data.success) {
+          this.setState({
+            status: 'not_initialized',
+            subscription: null,
+          })
+        }
+      })
+  }
+
   render () {
     const { status } = this.state
 
     switch (status) {
       case 'not_initialized':
         return (
-          <button onClick={ this.handleEnableClick }>Enable push messaging</button>
+          <button onClick={ this.handleSubscribeClick }>Enable push messaging</button>
         )
 
       case 'subscribed':
-        return `You're subscribed`
+        return (
+          <button onClick={ this.handleUnsubscribeClick }>Disable push messaging</button>
+        )
 
       case 'refused':
         return `You've refused to subscribe to receive push notifications `
